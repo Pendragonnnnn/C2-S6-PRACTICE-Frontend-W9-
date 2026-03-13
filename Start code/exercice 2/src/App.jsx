@@ -20,14 +20,24 @@ const INITIAL_STUFFS = [
 
 export default function App() {
   const [stuffs, setStuffs] = React.useState(INITIAL_STUFFS);
-
+  function handleValue(value){  
+        setStuffs((prev) => ([
+          ...prev,
+          {
+            name: value.name, 
+            price: value.price
+          }
+        ]))
+      }
   return (
     <>
       <header>
         <h1>My Stuff</h1>
       </header>
 
-      <StuffForm></StuffForm>
+      
+      
+      <StuffForm sendValue={handleValue} />
 
       <div className="stuff-list">
         {stuffs.map((stuff, index) => (

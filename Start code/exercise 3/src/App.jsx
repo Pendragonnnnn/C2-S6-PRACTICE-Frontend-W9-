@@ -24,6 +24,22 @@ const ORDERS = [
 export default function App() {
   const [orders, setOrders] = React.useState(ORDERS);
 
+  function updateQuantity(update, index){
+    setOrders(prev => {
+        const newOrder = [...prev];
+        newOrder[index] = {
+          ...newOrder[index],
+          quantity: Math.max(0, newOrder[index].quantity + update)
+        }
+          return newOrder;
+        }
+    )
+  }
+
+  let total = 0;
+  orders.forEach(element => {
+    total += (element.price * element.quantity)
+  });
   return (
     <>
       <header>
@@ -31,10 +47,10 @@ export default function App() {
       </header>
 
       <div className="order-list">
-        <OrderCard></OrderCard>
+        <OrderCard list={orders} sendUpdate={updateQuantity}/>
       </div>
 
-      <CheckoutButton total="TODO"></CheckoutButton>
+      <CheckoutButton total={total}></CheckoutButton>
     </>
   );
 }
